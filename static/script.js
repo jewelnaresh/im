@@ -1,7 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
+   
+    // Connect to websocket
+    var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
 
     // Check if username is available, if not get one
-
     if (!localStorage.getItem(username)) {
         let input = document.querySelector("#username")
         let button = document.querySelector("#setname")
@@ -22,9 +24,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Connect to websocket
-    var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+    // Add channel
+    let button = document.querySelector("#addchannel");
+    let input = document.querySelector("#newchannel");
 
+    button.addEventListener("click", () => {
+        socket.emit("add channel", input.value)
+    });
+    
+    socket.on("new channel", (channelname) => {
+        let li = document.createElement("li");
+        
+        li.appendChild(document.createTextNode(channelname));
+        document.querySelector("#channellist").appendChild(li);
+    });
 
 });
 

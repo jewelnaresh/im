@@ -7,8 +7,13 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 socketio = SocketIO(app)
 
-channels = {}
+channels = ["General"]
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("index.html", channels=channels)
+
+@socketio.on("add channel")
+def addchannel(channelname):
+    channels.append(channelname)
+    emit("new channel", channelname, broadcast=True)
