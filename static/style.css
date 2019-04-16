@@ -1,0 +1,12 @@
+body {
+    height: 100%;
+}
+
+.form-group {
+    margin-top: 1rem;
+}
+
+.form-control {
+    display: inline-block;
+    width: 40%;
+}
