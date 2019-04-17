@@ -67,6 +67,12 @@
     flex-direction: row-reverse;
 }
 
+.timestamp {
+    font-family: monospace;
+    color: grey;
+    font-size: 10px;
+}
+
 .msg-sender {
     font-family: 'Times New Roman', Times, serif;
     font-size: 15px;
