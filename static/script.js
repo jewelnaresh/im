@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
         element.addEventListener("click", () => {
             document.querySelector(".active").classList.remove("active");
             element.classList.add("active");
-        });        
+        });
     });
 
     // Add channel
@@ -50,20 +50,26 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     button.addEventListener("click", () => {
         socket.emit("add channel", input.value)
-        input.value="";
+        input.value = "";
     });
 
-    socket.on("new channel", (channelname) => {
-        let btn = document.createElement("button");
+    socket.on("new channel", (data) => {
 
-        document.querySelector(".active").classList.remove("active");
-        btn.appendChild(document.createTextNode("#" + channelname));
-        btn.classList.add("list-group-item", "list-group-item-action", "active");
-        document.querySelector("#channellist").appendChild(btn);
-        btn.addEventListener("click", () => {
+        if (data["error"]) {
+            alert("Channel already exists");
+        }
+        else {
+            let btn = document.createElement("button");
+
             document.querySelector(".active").classList.remove("active");
-            btn.classList.add("active");
-        }); 
+            btn.appendChild(document.createTextNode("#" + data["channelname"]));
+            btn.classList.add("list-group-item", "list-group-item-action", "active");
+            document.querySelector("#channellist").appendChild(btn);
+            btn.addEventListener("click", () => {
+                document.querySelector(".active").classList.remove("active");
+                btn.classList.add("active");
+            });
+        }
     });
 
 });

@@ -7,13 +7,24 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 socketio = SocketIO(app)
 
-channels = ["General"]
+channels = {}
+channels["general"] = []
+channellist = ["general"]
+
 
 @app.route("/")
 def index():
-    return render_template("index.html", channels=channels)
+    return render_template("index.html", channellist=channellist)
+
 
 @socketio.on("add channel")
 def addchannel(channelname):
-    channels.append(channelname)
-    emit("new channel", channelname, broadcast=True)
+    if (channelname in channels):
+        error = True
+    else:
+        error = False
+
+    channellist.append(channelname)
+    channels[channelname] = []
+
+    emit("new channel", {"channelname": channelname, "error": error}, broadcast=True)
