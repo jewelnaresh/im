@@ -1,4 +1,5 @@
 import os
+import datetime
 
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO, emit, join_room, leave_room
@@ -18,17 +19,17 @@ def index():
 
 @socketio.on("join channel")
 def on_join(data):
-    username = data['username']
-    room = data['room']
-    join_room(room)
-    send(username + ' has entered the room.', room=room)
+    channelname = data["channelname"][1:]
+    join_room(channelname)
+    channels[channelname].append(dict(username = data["username"], msg = data["username"] + " entered the chat room", time = datetime.datetime.now().strftime("%d/%m/%y %I:%M")))
+    emit("channel messages", channels[channelname], room=channelname)
+    
 
-@socketio.on('leave')
+@socketio.on('leave channel')
 def on_leave(data):
-    username = data['username']
-    room = data['room']
-    leave_room(room)
-    send(username + ' has left the room.', room=room)
+    channelname = data["channelname"][1:]
+    leave_room(channelname)
+    channels[channelname].append(dict(username = data["username"], msg = data["username"] + " left the chat room", time = datetime.datetime.now().strftime("%d/%m/%y %I:%M")))
 
 
 @socketio.on("add channel")
@@ -42,16 +43,3 @@ def addchannel(channelname):
     channels[channelname] = []
 
     emit("new channel", {"channelname": channelname, "error": error}, broadcast=True)
-
-
-@socketio.on("show messages")
-def showmessages(channelname):
-    channelname = channelname[1:]
-    emit("channel messages", channels[channelname])
-
-
-@socketio.on("channel selected")
-def channelselected(channelname):
-    channelname = channelname[1:]
-    channellist = list(channels.keys())    
-    emit("channel messages", channels[channelname], room=channellist[channellist.index(channelname)])

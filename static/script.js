@@ -30,9 +30,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Activate different channels
     document.querySelectorAll(".list-group-item").forEach(element => {
         element.addEventListener("click", () => {
+            socket.emit("leave channel", { channelname: document.querySelector(".active").innerHTML, username: localStorage.getItem(username) });
             document.querySelector(".active").classList.remove("active");
             element.classList.add("active");
-            socket.emit("channel selected", document.querySelector(".active").innerHTML);
+            socket.emit("join channel", { channelname: document.querySelector(".active").innerHTML, username: localStorage.getItem(username) });
         });
     });
 
@@ -62,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
         else {
             let btn = document.createElement("button");
 
+            socket.emit("leave channel", { channelname: document.querySelector(".active").innerHTML, username: localStorage.getItem(username) });
             document.querySelector(".active").classList.remove("active");
             btn.appendChild(document.createTextNode("#" + data["channelname"]));
             btn.classList.add("list-group-item", "list-group-item-action", "active");
@@ -70,32 +72,34 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.querySelector(".active").classList.remove("active");
                 btn.classList.add("active");
             });
+            socket.emit("join channel", { channelname: document.querySelector(".active").innerHTML, username: localStorage.getItem(username) });
         }
     });
 
     // show messages
     socket.on("connect", () => {
-        socket.emit("join channel", {room: document.querySelector(".active").innerHTML, username: localStorage.getItem(username));
-        socket.emit("show messages", document.querySelector(".active").innerHTML);
+        socket.emit("join channel", { channelname: document.querySelector(".active").innerHTML, username: localStorage.getItem(username) });
     });
 
     socket.on("channel messages", (messages) => {
 
-        for (const data of messages ) {
+        document.querySelector("#chatbox").innerHTML = "";
+
+        for (const data of messages) {
             let div_outer = document.createElement("div");
             let div_middle = document.createElement("div");
             let div_inner = document.createElement("div");
             let p_username = document.createElement("p");
             let p_msg = document.createElement("p");
             let p_time = document.createElement("p");
-    
+
             div_outer.classList.add("msg-container");
             div_middle.classList.add("msg");
-    
+
             p_username.classList.add("msg-sender");
             p_msg.classList.add("msg-text");
             p_time.classList.add("timestamp");
-            
+
             if (data["username"] === localStorage.getItem(username)) {
                 div_middle.classList.add("msg-right");
                 div_inner.classList.add("msg-sent");
