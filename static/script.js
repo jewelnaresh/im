@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (data["channel"]) {
             document.querySelector("#chatbox").innerHTML = "";
 
-            for (const msg of data["channelname"]) {
+            for (const msg of data["msgs"]) {
                 create_message(msg["username"], msg["msg"], msg["time"]);
             }
         }
@@ -136,6 +136,7 @@ function create_message(usr, msg, time) {
     let p_username = document.createElement("p");
     let p_msg = document.createElement("p");
     let p_time = document.createElement("p");
+    let chatbox = document.querySelector("#chatbox");
 
     div_outer.classList.add("msg-container");
     div_middle.classList.add("msg");
@@ -159,11 +160,12 @@ function create_message(usr, msg, time) {
     p_msg.appendChild(document.createTextNode(msg));
     p_time.appendChild(document.createTextNode(time));
 
-    document.querySelector("#chatbox").appendChild(div_outer);
+    chatbox.appendChild(div_outer);
     div_outer.appendChild(div_middle);
     div_outer.appendChild(p_time);
     div_middle.appendChild(p_username);
     div_middle.appendChild(div_inner);
     div_inner.appendChild(p_msg);
+    chatbox.scrollTop = chatbox.scrollHeight;
 }
 
