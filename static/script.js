@@ -70,6 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.classList.add("list-group-item", "list-group-item-action", "active");
             document.querySelector("#channellist").appendChild(btn);
             document.querySelector("#chatbox").innerHTML = "";
+            socket.emit("join channel", { channelname: document.querySelector(".active").innerHTML, username: localStorage.getItem(username) });
             btn.addEventListener("click", () => {
                 document.querySelector(".active").classList.remove("active");
                 btn.classList.add("active");
@@ -112,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     msg.addEventListener("keydown", event => {
-        if (event.keyCode === 13) {
+        if (event.keyCode === 13 && msg.value != "") {
             socket.emit("message sent", { channelname: document.querySelector(".active").innerHTML, username: localStorage.getItem(username), time: new Date().toLocaleString(), msg: msg.value });
             msg.value = "";
             msg.focus();
