@@ -1,3 +1,3 @@
-# Project 2
+This is simple channel based chat app.
 
-Web Programming with Python and JavaScript
+This version doesn't use any database so the messages are not permanant 
