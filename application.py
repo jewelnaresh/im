@@ -9,20 +9,20 @@ app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 socketio = SocketIO(app)
 
 channels = {}
-channels["general"] = [dict(msg="HI", username="asdd", time="12:000pm")]
-channellist = ["general"]
+channels["general"] = []
 
 
 @app.route("/")
 def index():
-    return render_template("index.html", channellist=channellist)
+    return render_template("index.html", channellist=list(channels.keys()))
 
 @socketio.on("join channel")
 def on_join(data):
-    channelname = data["channelname"][1:]
-    join_room(channelname)
-    channels[channelname].append(dict(username = data["username"], msg = data["username"] + " entered the chat room", time = datetime.datetime.now().strftime("%d/%m/%y %I:%M")))
-    emit("channel messages", channels[channelname], room=channelname)
+    if(data["username"]):
+        channelname = data["channelname"][1:]
+        join_room(channelname)
+        channels[channelname].append(dict(username = data["username"], msg = data["username"] + " entered the chat room", time = datetime.datetime.now().strftime("%d/%m/%y %I:%M")))
+        emit("messages", {"channelname": channels[channelname], "channel": True}, room=channelname)
     
 
 @socketio.on('leave channel')
@@ -39,7 +39,11 @@ def addchannel(channelname):
     else:
         error = False
 
-    channellist.append(channelname)
     channels[channelname] = []
-
     emit("new channel", {"channelname": channelname, "error": error}, broadcast=True)
+
+@socketio.on("message sent")
+def messagesent(data):
+    channelname = data["channelname"][1:]
+    channels[channelname].append({"username": data["username"], "msg": data["msg"], "time": data["time"]})
+    emit("messages", {"username": data["username"], "msg": data["msg"], "time": data["time"], "channel": False}, room=channelname)

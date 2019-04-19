@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
         button.addEventListener("click", () => {
             localStorage.setItem(username, input.value);
             $('#myModal').modal('hide');
+            socket.emit("join channel", { channelname: document.querySelector(".active").innerHTML, username: localStorage.getItem(username), channel: true });
         });
     }
 
@@ -68,61 +69,100 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.appendChild(document.createTextNode("#" + data["channelname"]));
             btn.classList.add("list-group-item", "list-group-item-action", "active");
             document.querySelector("#channellist").appendChild(btn);
+            document.querySelector("#chatbox").innerHTML = "";
             btn.addEventListener("click", () => {
                 document.querySelector(".active").classList.remove("active");
                 btn.classList.add("active");
+                socket.emit("join channel", { channelname: document.querySelector(".active").innerHTML, username: localStorage.getItem(username) });
             });
-            socket.emit("join channel", { channelname: document.querySelector(".active").innerHTML, username: localStorage.getItem(username) });
         }
     });
 
-    // show messages
+    // show messages on starup
     socket.on("connect", () => {
-        socket.emit("join channel", { channelname: document.querySelector(".active").innerHTML, username: localStorage.getItem(username) });
+        socket.emit("join channel", { channelname: document.querySelector(".active").innerHTML, username: localStorage.getItem(username), channel: true });
     });
 
-    socket.on("channel messages", (messages) => {
+    // show messages when a channel is changed
+    socket.on("messages", (data) => {
 
-        document.querySelector("#chatbox").innerHTML = "";
+        if (data["channel"]) {
+            document.querySelector("#chatbox").innerHTML = "";
 
-        for (const data of messages) {
-            let div_outer = document.createElement("div");
-            let div_middle = document.createElement("div");
-            let div_inner = document.createElement("div");
-            let p_username = document.createElement("p");
-            let p_msg = document.createElement("p");
-            let p_time = document.createElement("p");
-
-            div_outer.classList.add("msg-container");
-            div_middle.classList.add("msg");
-
-            p_username.classList.add("msg-sender");
-            p_msg.classList.add("msg-text");
-            p_time.classList.add("timestamp");
-
-            if (data["username"] === localStorage.getItem(username)) {
-                div_middle.classList.add("msg-right");
-                div_inner.classList.add("msg-sent");
-                p_username.classList.add("msg-sender-self");
-                p_time.classList.add("msg-right");
+            for (const msg of data["channelname"]) {
+                create_message(msg["username"], msg["msg"], msg["time"]);
             }
-            else {
-                div_inner.classList.add("msg-received");
-                p_username.classList.add("msg-sender-other");
-            }
-
-            p_username.appendChild(document.createTextNode(data["username"]));
-            p_msg.appendChild(document.createTextNode(data["msg"]));
-            p_time.appendChild(document.createTextNode(data["time"]));
-
-            document.querySelector("#chatbox").appendChild(div_outer);
-            div_outer.appendChild(div_middle);
-            div_outer.appendChild(p_time);
-            div_middle.appendChild(p_username);
-            div_middle.appendChild(div_inner);
-            div_inner.appendChild(p_msg);
         }
+        else {
+            create_message(data["username"], data["msg"], data["time"])
+        }
+    });
+
+    let send = document.querySelector("#send-button");
+    let msg = document.querySelector("#send-input");
+
+    send.disabled = true;
+    msg.addEventListener("keyup", () => {
+        if (msg.value.length > 0) {
+            send.disabled = false;
+        }
+        else {
+            send.disabled = true;
+        }
+    });
+
+    msg.addEventListener("keydown", event => {
+        if (event.keyCode === 13) {
+            socket.emit("message sent", { channelname: document.querySelector(".active").innerHTML, username: localStorage.getItem(username), time: new Date().toLocaleString(), msg: msg.value });
+            msg.value = "";
+            msg.focus();
+        }
+    });
+
+    send.addEventListener("click", () => {
+        socket.emit("message sent", { channelname: document.querySelector(".active").innerHTML, username: localStorage.getItem(username), time: new Date().toLocaleString(), msg: msg.value });
+        msg.value = "";
+        msg.focus();
     });
 
 });
+
+function create_message(usr, msg, time) {
+
+    let div_outer = document.createElement("div");
+    let div_middle = document.createElement("div");
+    let div_inner = document.createElement("div");
+    let p_username = document.createElement("p");
+    let p_msg = document.createElement("p");
+    let p_time = document.createElement("p");
+
+    div_outer.classList.add("msg-container");
+    div_middle.classList.add("msg");
+
+    p_username.classList.add("msg-sender");
+    p_msg.classList.add("msg-text");
+    p_time.classList.add("timestamp");
+
+    if (usr === localStorage.getItem(username)) {
+        div_middle.classList.add("msg-right");
+        div_inner.classList.add("msg-sent");
+        p_username.classList.add("msg-sender-self");
+        p_time.classList.add("msg-right");
+    }
+    else {
+        div_inner.classList.add("msg-received");
+        p_username.classList.add("msg-sender-other");
+    }
+
+    p_username.appendChild(document.createTextNode(usr));
+    p_msg.appendChild(document.createTextNode(msg));
+    p_time.appendChild(document.createTextNode(time));
+
+    document.querySelector("#chatbox").appendChild(div_outer);
+    div_outer.appendChild(div_middle);
+    div_outer.appendChild(p_time);
+    div_middle.appendChild(p_username);
+    div_middle.appendChild(div_inner);
+    div_inner.appendChild(p_msg);
+}
 
