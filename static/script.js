@@ -25,8 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Activate #general by default
-    document.querySelector(".list-group-item").classList.add("active");
 
     // Activate different channels
     document.querySelectorAll(".list-group-item").forEach(element => {
@@ -81,6 +79,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // show messages on starup
     socket.on("connect", () => {
+        // Activate #general by default
+        document.querySelector(".list-group-item").classList.add("active");
         socket.emit("join channel", { channelname: document.querySelector(".active").innerHTML, username: localStorage.getItem(username), channel: true });
     });
 
