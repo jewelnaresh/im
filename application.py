@@ -25,14 +25,18 @@ def on_join(data):
     if(data["username"]):
         channelname = data["channelname"][1:]
         join_room(channelname)
-        channel_id = Channels.query.filter_by(channelname=channelname).first().id
-        message = Messages(username=data["username"], msg=data["username"] + " entered the chat room", time=datetime.datetime.now().strftime("%d/%m/%y %I:%M"), channel_id=channel_id)
+        channel_id = db.session.query(Channels.id).filter_by(
+            channelname=channelname).first()
+        message = Messages(username=data["username"], msg=data["username"] + " entered the chat room",
+                           time=datetime.datetime.now().strftime("%d/%m/%y %I:%M"), channel_id=channel_id)
         db.session.add(message)
         db.session.commit()
-        msglist = Messages.query.filter_by(channel_id=channel_id).all()
+        msglist = db.session.query(Messages.username, Messages.msg, Messages.time).filter_by(
+            channel_id=channel_id).all()
         msgs = []
         for msg in msglist:
-                msgs.append({"username": msg.username, "msg": msg.msg, "time": msg.time})
+            msgs.append({"username": msg.username,
+                         "msg": msg.msg, "time": msg.time})
         emit("messages", {"msgs": msgs, "channel": True}, room=channelname)
 
 
@@ -41,7 +45,8 @@ def on_leave(data):
     channelname = data["channelname"][1:]
     leave_room(channelname)
     channel_id = Channels.query.filter_by(channelname=channelname).first().id
-    message = Messages(username=data["username"], msg=data["username"] + " left the chat room", time=datetime.datetime.now().strftime("%d/%m/%y %I:%M"), channel_id=channel_id)
+    message = Messages(username=data["username"], msg=data["username"] + " left the chat room",
+                       time=datetime.datetime.now().strftime("%d/%m/%y %I:%M"), channel_id=channel_id)
     db.session.add(message)
     db.session.commit()
 
@@ -58,14 +63,17 @@ def addchannel(newchannelname):
     channel = Channels(channelname=newchannelname)
     db.session.add(channel)
     db.session.commit()
-    emit("new channel", {"channelname": newchannelname, "error": error}, broadcast=True)
+    emit("new channel", {"channelname": newchannelname,
+                         "error": error}, broadcast=True)
 
 
 @socketio.on("message sent")
 def messagesent(data):
     channelname = data["channelname"][1:]
-    emit("messages", {"username": data["username"], "msg": data["msg"], "time": data["time"], "channel": False}, room=channelname)
+    emit("messages", {"username": data["username"], "msg": data["msg"],
+                      "time": data["time"], "channel": False}, room=channelname)
     channel_id = Channels.query.filter_by(channelname=channelname).first().id
-    message = Messages(username=data["username"], msg=data["msg"], time=data["time"], channel_id=channel_id)
+    message = Messages(
+        username=data["username"], msg=data["msg"], time=data["time"], channel_id=channel_id)
     db.session.add(message)
     db.session.commit()
