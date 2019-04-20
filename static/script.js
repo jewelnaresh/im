@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // Connect to websocket
-    var socket = io();
+    var socket = io.connect("https://messaging-app-2.herokuapp.com/");
 
     // Check if username is available, if not get one
     if (!localStorage.getItem(username)) {
