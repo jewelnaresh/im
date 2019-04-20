@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // Connect to websocket
-    var socket = io.connect(location.protocol + '//' + document.domain);
+    var socket = io();
 
     // Check if username is available, if not get one
     if (!localStorage.getItem(username)) {
