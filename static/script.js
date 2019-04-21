@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     button.addEventListener("click", () => {
-        socket.emit("add channel", {newchannelname: input.value, username: localStorage.getItem(username)})
+        socket.emit("add channel", { newchannelname: input.value, username: localStorage.getItem(username) })
         input.value = "";
     });
 
@@ -62,11 +62,38 @@ document.addEventListener('DOMContentLoaded', () => {
         else {
             if (data["username"] == localStorage.getItem(username)) {
                 socket.emit("leave channel", { channelname: document.querySelector(".active").innerHTML, username: localStorage.getItem(username) });
-                create_channel(data["channelname"]);
+
+                // Create a button for the channel
+                let btn = document.createElement("button");
+
+                document.querySelector(".active").classList.remove("active");
+                btn.appendChild(document.createTextNode("#" + data["channelname"]));
+                btn.classList.add("list-group-item", "list-group-item-action", "active");
+                document.querySelector("#channellist").appendChild(btn);
+                document.querySelector("#chatbox").innerHTML = "";
+                btn.addEventListener("click", () => {
+                    document.querySelector(".active").classList.remove("active");
+                    btn.classList.add("active");
+                    socket.emit("join channel", { channelname: document.querySelector(".active").innerHTML, username: localStorage.getItem(username) });
+                });
+
+                console.log("button created");
+
+                // Emit the signal for the user to join the new channel
                 socket.emit("join channel", { channelname: document.querySelector(".active").innerHTML, username: localStorage.getItem(username) });
             }
             else {
-                create_channel(data["channelname"]);
+                // Create a button for the channel
+                let btn = document.createElement("button");
+
+                btn.appendChild(document.createTextNode("#" + data["channelname"]));
+                btn.classList.add("list-group-item", "list-group-item-action");
+                document.querySelector("#channellist").appendChild(btn);
+                btn.addEventListener("click", () => {
+                    document.querySelector(".active").classList.remove("active");
+                    btn.classList.add("active");
+                    socket.emit("join channel", { channelname: document.querySelector(".active").innerHTML, username: localStorage.getItem(username) });
+                });
             }
         }
     });
@@ -161,20 +188,4 @@ function create_message(usr, msg, time) {
     div_middle.appendChild(div_inner);
     div_inner.appendChild(p_msg);
     chatbox.scrollTop = chatbox.scrollHeight;
-}
-
-function create_channel(channelname) {
-    let btn = document.createElement("button");
-
-    document.querySelector(".active").classList.remove("active");
-    btn.appendChild(document.createTextNode("#" + channelname));
-    btn.classList.add("list-group-item", "list-group-item-action", "active");
-    document.querySelector("#channellist").appendChild(btn);
-    document.querySelector("#chatbox").innerHTML = "";
-    btn.addEventListener("click", () => {
-        document.querySelector(".active").classList.remove("active");
-        btn.classList.add("active");
-        socket.emit("join channel", { channelname: document.querySelector(".active").innerHTML, username: localStorage.getItem(username) });
-    });
-
 }
