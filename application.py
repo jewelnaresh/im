@@ -52,18 +52,18 @@ def on_leave(data):
 
 
 @socketio.on("add channel")
-def addchannel(newchannelname):
+def addchannel(data):
     channelnames = Channels.query.all()
     for channelname in channelnames:
-        if (newchannelname == channelname.channelname):
+        if (data["newchannelname"] == channelname.channelname):
             error = True
         else:
             error = False
+            channel = Channels(channelname=data["newchannelname"])
+            db.session.add(channel)
+            db.session.commit()
 
-    channel = Channels(channelname=newchannelname)
-    db.session.add(channel)
-    db.session.commit()
-    emit("new channel", {"channelname": newchannelname,
+    emit("new channel", {"channelname": data["newchannelname"], "username": data["username"],
                          "error": error}, broadcast=True)
 
 

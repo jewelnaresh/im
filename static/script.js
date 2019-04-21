@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // Connect to websocket
-    var socket = io.connect("https://messaging-app-2.herokuapp.com/");
+    var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
 
     // Check if username is available, if not get one
     if (!localStorage.getItem(username)) {
@@ -25,8 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Activate #general by default
-    document.querySelector(".list-group-item").classList.add("active");
 
     // Activate different channels
     document.querySelectorAll(".list-group-item").forEach(element => {
@@ -52,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     button.addEventListener("click", () => {
-        socket.emit("add channel", input.value)
+        socket.emit("add channel", { newchannelname: input.value, username: localStorage.getItem(username) })
         input.value = "";
     });
 
@@ -62,25 +60,48 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("Channel already exists");
         }
         else {
-            let btn = document.createElement("button");
+            if (data["username"] == localStorage.getItem(username)) {
+                socket.emit("leave channel", { channelname: document.querySelector(".active").innerHTML, username: localStorage.getItem(username) });
 
-            socket.emit("leave channel", { channelname: document.querySelector(".active").innerHTML, username: localStorage.getItem(username) });
-            document.querySelector(".active").classList.remove("active");
-            btn.appendChild(document.createTextNode("#" + data["channelname"]));
-            btn.classList.add("list-group-item", "list-group-item-action", "active");
-            document.querySelector("#channellist").appendChild(btn);
-            document.querySelector("#chatbox").innerHTML = "";
-            socket.emit("join channel", { channelname: document.querySelector(".active").innerHTML, username: localStorage.getItem(username) });
-            btn.addEventListener("click", () => {
+                // Create a button for the channel
+                let btn = document.createElement("button");
+
                 document.querySelector(".active").classList.remove("active");
-                btn.classList.add("active");
+                btn.appendChild(document.createTextNode("#" + data["channelname"]));
+                btn.classList.add("list-group-item", "list-group-item-action", "active");
+                document.querySelector("#channellist").appendChild(btn);
+                document.querySelector("#chatbox").innerHTML = "";
+                btn.addEventListener("click", () => {
+                    document.querySelector(".active").classList.remove("active");
+                    btn.classList.add("active");
+                    socket.emit("join channel", { channelname: document.querySelector(".active").innerHTML, username: localStorage.getItem(username) });
+                });
+
+                console.log("button created");
+
+                // Emit the signal for the user to join the new channel
                 socket.emit("join channel", { channelname: document.querySelector(".active").innerHTML, username: localStorage.getItem(username) });
-            });
+            }
+            else {
+                // Create a button for the channel
+                let btn = document.createElement("button");
+
+                btn.appendChild(document.createTextNode("#" + data["channelname"]));
+                btn.classList.add("list-group-item", "list-group-item-action");
+                document.querySelector("#channellist").appendChild(btn);
+                btn.addEventListener("click", () => {
+                    document.querySelector(".active").classList.remove("active");
+                    btn.classList.add("active");
+                    socket.emit("join channel", { channelname: document.querySelector(".active").innerHTML, username: localStorage.getItem(username) });
+                });
+            }
         }
     });
 
     // show messages on starup
     socket.on("connect", () => {
+        // Activate #general by default
+        document.querySelector(".list-group-item").classList.add("active");
         socket.emit("join channel", { channelname: document.querySelector(".active").innerHTML, username: localStorage.getItem(username), channel: true });
     });
 
@@ -168,4 +189,3 @@ function create_message(usr, msg, time) {
     div_inner.appendChild(p_msg);
     chatbox.scrollTop = chatbox.scrollHeight;
 }
-
