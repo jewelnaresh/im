@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     button.addEventListener("click", () => {
-        socket.emit("add channel", input.value)
+        socket.emit("add channel", {newchannelname: input.value, username: localStorage.getItem(username)})
         input.value = "";
     });
 
@@ -60,20 +60,14 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("Channel already exists");
         }
         else {
-            let btn = document.createElement("button");
-
-            socket.emit("leave channel", { channelname: document.querySelector(".active").innerHTML, username: localStorage.getItem(username) });
-            document.querySelector(".active").classList.remove("active");
-            btn.appendChild(document.createTextNode("#" + data["channelname"]));
-            btn.classList.add("list-group-item", "list-group-item-action", "active");
-            document.querySelector("#channellist").appendChild(btn);
-            document.querySelector("#chatbox").innerHTML = "";
-            socket.emit("join channel", { channelname: document.querySelector(".active").innerHTML, username: localStorage.getItem(username) });
-            btn.addEventListener("click", () => {
-                document.querySelector(".active").classList.remove("active");
-                btn.classList.add("active");
+            if (data["username"] == localStorage.getItem(username)) {
+                socket.emit("leave channel", { channelname: document.querySelector(".active").innerHTML, username: localStorage.getItem(username) });
+                create_channel(data["channelname"]);
                 socket.emit("join channel", { channelname: document.querySelector(".active").innerHTML, username: localStorage.getItem(username) });
-            });
+            }
+            else {
+                create_channel(data["channelname"]);
+            }
         }
     });
 
@@ -169,3 +163,18 @@ function create_message(usr, msg, time) {
     chatbox.scrollTop = chatbox.scrollHeight;
 }
 
+function create_channel(channelname) {
+    let btn = document.createElement("button");
+
+    document.querySelector(".active").classList.remove("active");
+    btn.appendChild(document.createTextNode("#" + channelname));
+    btn.classList.add("list-group-item", "list-group-item-action", "active");
+    document.querySelector("#channellist").appendChild(btn);
+    document.querySelector("#chatbox").innerHTML = "";
+    btn.addEventListener("click", () => {
+        document.querySelector(".active").classList.remove("active");
+        btn.classList.add("active");
+        socket.emit("join channel", { channelname: document.querySelector(".active").innerHTML, username: localStorage.getItem(username) });
+    });
+
+}
