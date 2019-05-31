@@ -1,19 +1,24 @@
 
 .form-group {
     margin-top: 1rem;
-    margin-left: 1.25rem;
 }
 #newchannel {
     display: inline-block;
-    width: 40%;
+}
+
+img {
+    height: 20px;
+    width: 20px;
 }
 
 .list-group-item {
-    width: 30%;
     border-radius: 1.875rem !important;
-    margin-left: 1.25rem;
-    padding-left: 0.625rem;
+    padding-left: 1rem;
     margin-bottom: 1.25rem !important;
+}
+
+.btn {
+    vertical-align: top;
 }
 
 button:focus {
@@ -21,15 +26,28 @@ button:focus {
 }
 
 #chatbox {
-    border-radius: 1.25rem 1.25rem 0rem 0rem;
-    margin: 0 auto;
+    /* border-radius: 1.25rem 1.25rem 0rem 0rem; */
+    /* margin: 0 auto; */
     margin-bottom: 0;
-    margin-top: 2.5rem;
+    /* margin-top: 2.5rem; */
     padding: 0.625rem;
-    background:rgb(255, 255, 255);
-    height: 26.25rem;
-    width: 85%;
-    border: 0.125rem solid rgb(66, 20, 173);
+    /* background:rgb(255, 255, 255); */
+    height: 94.2vh;
+    /* width: 85%; */
+    /* border: 0.125rem solid rgb(66, 20, 173); */
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    border-left: 1px solid rgb(115, 114, 114);
+    border-right: 1px solid rgb(115, 114, 114);
+}
+
+#chatbox::-webkit-scrollbar { 
+    display: none;
+}
+
+.sidepanel {
+    height: 100vh;
     overflow: auto;
 }
 
@@ -45,7 +63,8 @@ button:focus {
 }
 
 .msg-sent {
-    background-color: rgb(224, 224, 224);
+    color: white;
+    background-color: rgb(117, 117, 117);
     display: inline-block;
     border-radius: 1.75rem;
     padding: 0.3125rem 1.1875rem;
@@ -73,11 +92,12 @@ button:focus {
 
 .timestamp {
     font-family: monospace;
-    color: grey;
+    color:#cccccc;
     font-size: 0.625rem;
 }
 
 .msg-sender {
+    color: white;
     font-family: 'Times New Roman', Times, serif;
     font-size: 0.9375rem;
     margin-bottom: 0;
@@ -96,23 +116,59 @@ button:focus {
 }
 
 #send-group {
-    margin: 0rem auto;
+    /* margin: 0rem auto; */
     padding: 0;
-    width: 85%;
+    /* width: 85%; */
 }
 
 #send-input {
-    border-radius: 0rem 0rem 0rem 1.25rem;
-    width: 82%;
+    color: white;
+    border: 0px solid white;
+    border-radius: 0rem;
+    width: 88%;
+    height: 5.8vh;
     display: inline-block;
-    border-bottom: rgb(66, 20, 173) 0.125rem solid;
-    border-left: rgb(66, 20, 173) 0.125rem solid;
+    border-left: 1px solid rgb(115, 114, 114);
+    border-top: 1px solid rgb(115, 114, 114);
+    /* border-bottom: rgb(66, 20, 173) 0.125rem solid; */
+    /* border-left: rgb(66, 20, 173) 0.125rem solid; */
+}
+
+#send-input:focus {
+    box-shadow: none;
+    border-left: 1px solid rgb(115, 114, 114);
+    border-top: 1px solid rgb(115, 114, 114);
 }
 
 #send-button {
-    border-right: rgb(66, 20, 173) 0.125rem solid;
-    border-bottom: rgb(66, 20, 173) 0.125rem solid;
-    width: 18%;
-    height: 2.375rem;
-    border-radius: 0rem 0rem 1.25rem 0rem;
+    /* border-right: rgb(66, 20, 173) 0.125rem solid; */
+    /* border-bottom: rgb(66, 20, 173) 0.125rem solid; */
+    width: 12%;
+    height: 5.8vh;
+    border-radius: 0rem;
+    border-right: 1px solid rgb(115, 114, 114);
+    border-left: 1px solid rgb(115, 114, 114);
+    border-top: 1px solid rgb(115, 114, 114);
+    border-bottom: 0px solid white;
+}
+
+#send-button:hover {
+    border-right: 1px solid rgb(115, 114, 114);
+    border-left: 1px solid rgb(115, 114, 114);
+    border-top: 1px solid rgb(115, 114, 114);
+    border-bottom: 0px solid white;
+}
+
+#send-button:active {
+    border-right: 1px solid rgb(115, 114, 114);
+    border-left: 1px solid rgb(115, 114, 114);
+    border-top: 1px solid rgb(115, 114, 114);
+    border-bottom: 0px solid white;
+}
+
+#send-button:focus {
+    border-right: 1px solid rgb(115, 114, 114);
+    border-left: 1px solid rgb(115, 114, 114);
+    border-top: 1px solid rgb(115, 114, 114);
+    border-bottom: 0px solid white;
 }

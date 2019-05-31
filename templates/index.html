@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 
-<body>
+<body class="bg-dark">
 
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -27,11 +27,38 @@
         </div>
     </div>
 
-    <div id="chatbox">
+    <div class="container ml-0">
 
-        <!-- sample format of a chat -->
+        <div class="row">
+            <div class="col-3 bg-dark sidepanel pl-4 pr-4">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-10 pl-0 pr-2">
+                            <input class="form-control" type="text" id="newchannel" placeholder="New Channel">
+                        </div>
+                        <div class="col-2 pl-0 pr-0">
+                            <button class="btn btn-primary" id="addchannel"><img src="../static/plus.png"
+                                    alt=""></button>
+                        </div>
+                    </div>
+                </div>
 
-        <!-- <div class="msg-container">
+
+                <div class="list-group" id="channellist">
+                    {% for channel in channellist %}
+                    <button
+                        class="list-group-item list-group-item-action text-center">#{{ channel.channelname }}</button>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="col-9 pl-0">
+
+                <div id="chatbox" class="bg-dark">
+
+                    <!-- sample format of a chat -->
+
+                    <!-- <div class="msg-container">
             <div class="msg msg-right">
                 <p class="msg-sender msg-sender-self">User1</p>
                 <div class="msg-sent">
@@ -61,27 +88,15 @@
             <p class="msg-right timestamp">12:06pm</p>
         </div> -->
 
-    </div>
+                </div>
 
-    <div id="send-group">
-        <input class="form-control" id="send-input" type="text"><button class="btn btn-primary" id="send-button">Send</button>
-    </div>
-
-
-    <div class="container">
-        <div class="form-group">
-            <input class="form-control" type="text" id="newchannel">
-            <button class="btn btn-primary" id="addchannel">Add channel</button>
-        </div>
-
-        <div class="list-group" id="channellist">
-            {% for channel in channellist %}
-            <button class="list-group-item list-group-item-action">#{{ channel.channelname }}</button>
-            {% endfor %}
+                <div id="send-group">
+                    <input class="form-control bg-dark" id="send-input" type="text"><button class="btn btn-primary bg-dark" id="send-button"><img src="../static/send.png" alt=""></button>
+                </div>
+            </div>
         </div>
     </div>
 
-    </div>
 
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
