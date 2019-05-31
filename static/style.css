@@ -38,8 +38,8 @@ button:focus {
     overflow: auto;
     -ms-overflow-style: none;
     scrollbar-width: none;
-    border-left: 1px solid rgb(83, 83, 83);
-    border-right: 1px solid rgb(83, 83, 83);
+    border-left: 1px solid rgb(115, 114, 114);
+    border-right: 1px solid rgb(115, 114, 114);
 }
 
 #chatbox::-webkit-scrollbar { 
@@ -124,19 +124,50 @@ button:focus {
 #send-input {
     border: 0px solid white;
     border-radius: 0rem;
-    width: 82%;
+    width: 88%;
+    height: 5.8vh;
     display: inline-block;
-    border-left: 1px solid rgb(83, 83, 83);
-    border-right: 1px solid rgb(83, 83, 83);
-    border-top: 1px solid rgb(83, 83, 83);
+    border-left: 1px solid rgb(115, 114, 114);
+    border-top: 1px solid rgb(115, 114, 114);
     /* border-bottom: rgb(66, 20, 173) 0.125rem solid; */
     /* border-left: rgb(66, 20, 173) 0.125rem solid; */
+}
+
+#send-input:focus {
+    box-shadow: none;
+    border-left: 1px solid rgb(115, 114, 114);
+    border-top: 1px solid rgb(115, 114, 114);
 }
 
 #send-button {
     /* border-right: rgb(66, 20, 173) 0.125rem solid; */
     /* border-bottom: rgb(66, 20, 173) 0.125rem solid; */
-    width: 18%;
-    height: 2.375rem;
+    width: 12%;
+    height: 5.8vh;
     border-radius: 0rem;
+    border-right: 1px solid rgb(115, 114, 114);
+    border-left: 1px solid rgb(115, 114, 114);
+    border-top: 1px solid rgb(115, 114, 114);
+    border-bottom: 0px solid white;
+}
+
+#send-button:hover {
+    border-right: 1px solid rgb(115, 114, 114);
+    border-left: 1px solid rgb(115, 114, 114);
+    border-top: 1px solid rgb(115, 114, 114);
+    border-bottom: 0px solid white;
+}
+
+#send-button:active {
+    border-right: 1px solid rgb(115, 114, 114);
+    border-left: 1px solid rgb(115, 114, 114);
+    border-top: 1px solid rgb(115, 114, 114);
+    border-bottom: 0px solid white;
+}
+
+#send-button:focus {
+    border-right: 1px solid rgb(115, 114, 114);
+    border-left: 1px solid rgb(115, 114, 114);
+    border-top: 1px solid rgb(115, 114, 114);
+    border-bottom: 0px solid white;
 }
