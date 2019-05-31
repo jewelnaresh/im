@@ -122,6 +122,7 @@ button:focus {
 }
 
 #send-input {
+    color: white;
     border: 0px solid white;
     border-radius: 0rem;
     width: 88%;
