@@ -32,7 +32,7 @@ button:focus {
     /* margin-top: 2.5rem; */
     padding: 0.625rem;
     /* background:rgb(255, 255, 255); */
-    height: 94.2vh;
+    height: 93.2vh;
     /* width: 85%; */
     /* border: 0.125rem solid rgb(66, 20, 173); */
     overflow: auto;
@@ -126,10 +126,11 @@ button:focus {
     border: 0px solid white;
     border-radius: 0rem;
     width: 88%;
-    height: 5.8vh;
+    height: 6.8vh;
     display: inline-block;
     border-left: 1px solid rgb(115, 114, 114);
     border-top: 1px solid rgb(115, 114, 114);
+    border-bottom: 1px solid rgb(115, 114, 114);
     /* border-bottom: rgb(66, 20, 173) 0.125rem solid; */
     /* border-left: rgb(66, 20, 173) 0.125rem solid; */
 }
@@ -138,37 +139,47 @@ button:focus {
     box-shadow: none;
     border-left: 1px solid rgb(115, 114, 114);
     border-top: 1px solid rgb(115, 114, 114);
+    border-bottom: 1px solid rgb(115, 114, 114);
 }
 
 #send-button {
     /* border-right: rgb(66, 20, 173) 0.125rem solid; */
     /* border-bottom: rgb(66, 20, 173) 0.125rem solid; */
     width: 12%;
-    height: 5.8vh;
+    height: 6.8vh;
     border-radius: 0rem;
+    border-left: 0px solid rgb(115, 114, 114);
     border-right: 1px solid rgb(115, 114, 114);
-    border-left: 1px solid rgb(115, 114, 114);
     border-top: 1px solid rgb(115, 114, 114);
-    border-bottom: 0px solid white;
+    border-bottom: 1px solid rgb(115, 114, 114);
 }
 
 #send-button:hover {
+    border-left: 0px solid rgb(115, 114, 114);
     border-right: 1px solid rgb(115, 114, 114);
-    border-left: 1px solid rgb(115, 114, 114);
     border-top: 1px solid rgb(115, 114, 114);
-    border-bottom: 0px solid white;
+    border-bottom: 1px solid rgb(115, 114, 114);
 }
 
 #send-button:active {
+    border-left: 0px solid rgb(115, 114, 114);
     border-right: 1px solid rgb(115, 114, 114);
-    border-left: 1px solid rgb(115, 114, 114);
     border-top: 1px solid rgb(115, 114, 114);
-    border-bottom: 0px solid white;
+    border-bottom: 1px solid rgb(115, 114, 114);
 }
 
 #send-button:focus {
+    border-left: 0px solid rgb(115, 114, 114);
     border-right: 1px solid rgb(115, 114, 114);
-    border-left: 1px solid rgb(115, 114, 114);
     border-top: 1px solid rgb(115, 114, 114);
-    border-bottom: 0px solid white;
+    border-bottom: 1px solid rgb(115, 114, 114);
+}
+
+#send-button:disabled {
+      opacity: 1;
+}
+
+#send-image {
+    height: 35px;
+    width: 38px;
 }
