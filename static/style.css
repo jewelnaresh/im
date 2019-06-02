@@ -51,13 +51,6 @@ button:focus {
     overflow: auto;
 }
 
-.card {
-    display: inline-block;
-    width: auto;
-    margin: 1.25rem;
-    border-radius: 4rem;
-}
-
 .msg {
     margin: 0.5rem 0rem; 
 }
@@ -125,7 +118,7 @@ button:focus {
     color: white;
     border: 0px solid white;
     border-radius: 0rem;
-    width: 88%;
+    width: 92%;
     height: 6.8vh;
     display: inline-block;
     border-left: 1px solid rgb(115, 114, 114);
@@ -145,7 +138,8 @@ button:focus {
 #send-button {
     /* border-right: rgb(66, 20, 173) 0.125rem solid; */
     /* border-bottom: rgb(66, 20, 173) 0.125rem solid; */
-    width: 12%;
+    padding-right: 0px;
+    width: 8%;
     height: 6.8vh;
     border-radius: 0rem;
     border-left: 0px solid rgb(115, 114, 114);

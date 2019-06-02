@@ -27,10 +27,26 @@
         </div>
     </div>
 
-    <div class="container ml-0">
+    <!-- <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <a class="navbar-brand" href="/">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">#general <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </div>
+    </nav> -->
+
+    <div class="container-fluid ml-0">
 
         <div class="row">
-            <div class="col-3 bg-dark sidepanel pl-4 pr-4">
+            <div class="col-3 d-none d-md-block bg-dark sidepanel pl-4 pr-4">
                 <div class="form-group">
                     <div class="row">
                         <div class="col-10 pl-0 pr-2">
@@ -52,46 +68,48 @@
                 </div>
             </div>
 
-            <div class="col-9 pl-0">
+            <div class="col-12 col-md-9 pl-0 pr-0">
 
                 <div id="chatbox" class="bg-dark">
 
                     <!-- sample format of a chat -->
 
                     <!-- <div class="msg-container">
-            <div class="msg msg-right">
-                <p class="msg-sender msg-sender-self">User1</p>
-                <div class="msg-sent">
-                    <p class="msg-text">hello</p>
-                </div>
-            </div>
-            <p class="msg-right timestamp">12:03pm</p>
-        </div>
+                        <div class="msg msg-right">
+                            <p class="msg-sender msg-sender-self">User1</p>
+                            <div class="msg-sent">
+                                <p class="msg-text">hello</p>
+                            </div>
+                        </div>
+                        <p class="msg-right timestamp">12:03pm</p>
+                    </div>
 
-        <div class="msg-container">
-            <div class="msg">
-                <p class="msg-sender msg-sender-other">User2</p>
-                <div class="msg-received">
-                    <p class="msg-text">how are you doing?</p>
-                </div>
-            </div>
-            <p class="timestamp">12:04pm</p>
-        </div>
+                    <div class="msg-container">
+                        <div class="msg">
+                            <p class="msg-sender msg-sender-other">User2</p>
+                            <div class="msg-received">
+                                <p class="msg-text">how are you doing?</p>
+                            </div>
+                        </div>
+                        <p class="timestamp">12:04pm</p>
+                    </div>
 
-        <div class="msg-container">
-            <div class="msg msg-right">
-                <p class="msg-sender msg-sender-self">User1</p>
-                <div class="msg-sent">
-                    <p class="msg-text">I am doing good!!!</p>
-                </div>
-            </div>
-            <p class="msg-right timestamp">12:06pm</p>
-        </div> -->
+                    <div class="msg-container">
+                        <div class="msg msg-right">
+                            <p class="msg-sender msg-sender-self">User1</p>
+                            <div class="msg-sent">
+                                <p class="msg-text">I am doing good!!!</p>
+                            </div>
+                        </div>
+                        <p class="msg-right timestamp">12:06pm</p>
+                    </div> -->
 
                 </div>
 
                 <div id="send-group">
-                    <input class="form-control bg-dark" id="send-input" type="text"><button class="btn btn-primary bg-dark" id="send-button"><img id="send-image" src="../static/send.png" alt=""></button>
+                    <input class="form-control bg-dark" id="send-input" type="text"><button
+                        class="btn btn-primary bg-dark" id="send-button"><img id="send-image" src="../static/send.png"
+                            alt=""></button>
                 </div>
             </div>
         </div>
