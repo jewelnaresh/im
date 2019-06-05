@@ -203,3 +203,13 @@ button:focus {
         border-bottom: 1px solid rgb(115, 114, 114);
     }
 }
+
+@media (max-height: 600px) {
+    #chatbox {
+        height: 87vh;
+    }
+
+    #send-input {
+        height: 8.5vh;
+    }
+}
