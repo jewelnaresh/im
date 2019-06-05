@@ -32,14 +32,13 @@ button:focus {
     /* margin-top: 2.5rem; */
     padding: 0.625rem;
     /* background:rgb(255, 255, 255); */
-    height: 93.2vh;
+    height: 91.2vh;
     /* width: 85%; */
     /* border: 0.125rem solid rgb(66, 20, 173); */
     overflow: auto;
     -ms-overflow-style: none;
     scrollbar-width: none;
-    border-left: 1px solid rgb(115, 114, 114);
-    border-right: 1px solid rgb(115, 114, 114);
+    border: 0px solid black;
 }
 
 #chatbox::-webkit-scrollbar { 
@@ -117,13 +116,16 @@ button:focus {
 #send-input {
     color: white;
     border: 0px solid white;
-    border-radius: 0rem;
-    width: 92%;
-    height: 6.8vh;
     display: inline-block;
     border-left: 1px solid rgb(115, 114, 114);
     border-top: 1px solid rgb(115, 114, 114);
     border-bottom: 1px solid rgb(115, 114, 114);
+    height: 5.9vh;
+    width: 81%;
+    border-radius: 5rem;
+    margin: 10px;
+    background-color: #636363 !important;
+    margin-right: 0px;
     /* border-bottom: rgb(66, 20, 173) 0.125rem solid; */
     /* border-left: rgb(66, 20, 173) 0.125rem solid; */
 }
@@ -139,13 +141,11 @@ button:focus {
     /* border-right: rgb(66, 20, 173) 0.125rem solid; */
     /* border-bottom: rgb(66, 20, 173) 0.125rem solid; */
     padding: 0px;
-    width: 8%;
-    height: 6.8vh;
     border-radius: 0rem;
-    border-left: 1px solid rgb(115, 114, 114);
-    border-right: 1px solid rgb(115, 114, 114);
-    border-top: 1px solid rgb(115, 114, 114);
-    border-bottom: 1px solid rgb(115, 114, 114);
+    height: 5.9vh;
+    width: 16%;
+    margin-top: 10px;
+    border: 0px solid black;
 }
 
 #send-button:hover {
@@ -178,25 +178,28 @@ button:focus {
     width: 38px;
 }
 
-@media (max-width: 768px) {
+@media (min-width: 768px) {
 
     #chatbox {
-        height: 91.2vh;
+        height: 93.2vh;
+        border-left: 1px solid rgb(115, 114, 114);
+        border-right: 1px solid rgb(115, 114, 114);
     }
 
     #send-input {
-        height: 5.9vh;
-        width: 81%;
-        border-radius: 5rem;
-        margin: 10px;
-        background-color: #636363 !important;
-        margin-right: 0px;
+        border-radius: 0rem;
+        width: 92%;
+        height: 6.8vh;
+        margin: 0;
     }
 
     #send-button {
-        height: 5.9vh;
-        width: 16%;
-        margin-top: 10px;
-        border: 0px solid black;
+        width: 8%;
+        height: 6.8vh;
+        margin: 0;
+        border-left: 1px solid rgb(115, 114, 114);
+        border-right: 1px solid rgb(115, 114, 114);
+        border-top: 1px solid rgb(115, 114, 114);
+        border-bottom: 1px solid rgb(115, 114, 114);
     }
 }
